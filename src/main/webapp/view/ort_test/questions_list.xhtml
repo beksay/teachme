@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/layouts/private.xhtml">
+
+ 	<ui:define name="content">
+
+		<h:form id ="form">
+		    
+		       <ui:repeat var="car" value="#{testController.questionsList}">
+			      <h:commandLink action="#{questionsController.goTest(car)}" 
+			             value="#{car.number}" styleClass="#{testController.getBoldQuestions(car)}" />
+		       </ui:repeat>
+		       
+		       <br /><br />
+		       
+		       <h:outputText value="#{testController.conversationQuestions.questions.title}" escape="false" />
+		       
+		       <p:dataTable id="radioDT" var="car" value="#{testController.getAnswersList(testController.conversationQuestions.questions)}" 
+		            selection="#{testController.answers}" rowKey="#{car.id}" rendered="#{testController.conversationQuestions.questions.id!=null}"
+		            rowStyleClass="#{testController.getBoldDocuments(car)}">
+			        <p:column selectionMode="single" style="width:30px;text-align:center" rendered="#{!testController.isTestEnded(testController.conversationQuestions.questions)}"/>
+			        
+			        <p:column >
+			            <h:outputText value="#{car.letter}" />
+			        </p:column>
+			        <p:column >
+			            <h:outputText value="#{car.title}" escape="false"/>
+			        </p:column>
+			    </p:dataTable>
+			  
+			     <h:panelGroup class="btnRegBlock" rendered="#{testController.conversationQuestions.questions.id!=null}">
+		        	<h:commandButton action="#{testController.sendToConfirm()}" value="#{msgs.approve}" rendered="#{!testController.isTestEnded(testController.conversationQuestions.questions)}"/>
+					<h:outputLabel style="width:10px;display:inline-block"/>
+				 </h:panelGroup>
+	
+	
+	           <p:messages/>
+			  <p:growl id="growl" showDetail="true" sticky="true" />
+		</h:form>
+		<h:form id ="form2" rendered="#{testController.conversationQuestions.questions.id !=null}">
+		
+		      <h:panelGrid columns="2" rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
+					<h:inputTextarea cols="50" rows="5" value="#{testController.feedback.title}" 
+						       id="feedback"   required="true" requiredMessage="#{msgs.isReq}"/>
+					<p:message for="feedback" />
+		      	   <p:commandButton ajax="false"  update="@form form2 feedbackId" value="#{msgs.sendFeedback}" actionListener="#{testController.sendFeedback()}" />
+		      </h:panelGrid>
+		
+		       <p:dataTable id="feedbackId" var="entity" value="#{testController.getFeedbackList(testController.conversationQuestions.questions)}" 
+		            selection="#{testController.answers}" rowKey="#{car.id}"
+		            rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
+			   
+			        <p:column headerText="#{msgs.feedbacks}">
+			            <h:outputText value="#{entity.title}"/>
+			        </p:column>
+			        <p:column headerText="#{msgs.users}">
+			            <h:outputText value="#{entity.user.person.fullName}" /><br/>
+			            <h:outputText value="#{entity.date}" style="color:green; margin-right:10px" >
+						    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+						</h:outputText> 
+			        </p:column>
+			    </p:dataTable>
+		
+		
+		</h:form>
+			
+
+		<div class="clear"></div>			
+				
+	</ui:define>	
+	
+</ui:composition>

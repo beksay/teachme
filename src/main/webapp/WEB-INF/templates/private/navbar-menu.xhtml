@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:composition>
+	    <div class="maintopContainerPrivate">
+			<div class="container">
+			  <h:form>
+				<div class="maintopContent">
+					<div class="maintop-logo">
+						<a class="mainlogo" href="/teachme/view/main.xhtml"><h:graphicImage library="images" name="main-logo.png" width="150" height="50"/></a>
+						
+						<ul class="jukMenu">
+						 
+							<li>
+							   <h:link value="#{msgs.ort}"  outcome="/view/ort/ort_list.xhtml" rendered="#{loginUtil.userHasRole(loginUtil.currentUser, 'admin')}">
+							   </h:link>
+							</li>
+							<li>
+							   <h:link value="#{msgs.ort}"  outcome="/view/ort_test/ort_list.xhtml" rendered="#{loginUtil.userHasRole(loginUtil.currentUser, 'student')}">
+							   </h:link>
+							</li>
+						</ul>
+					</div>
+					<div class="maintop-right">
+					    <h:outputText value="#{loginUtil.currentUser.person.money} сом" rendered="#{loginUtil.userHasRole(loginUtil.currentUser, 'driver')}" style="color:#edc55f; font-weight: 700; margin-right: 3px;"/>
+						<h:commandLink action="#{profileController.goProfile(loginUtil.currentUser)}" value="Привет, #{loginUtil.currentUser.person.firstName}" />
+					</div>
+				  </div>
+			   </h:form>
+			</div>
+		</div>
+	</ui:composition>
+</html>

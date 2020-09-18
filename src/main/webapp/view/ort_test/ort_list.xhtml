@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/layouts/private.xhtml">
+ 	<ui:define name="content">
+
+        <div class="clear"></div>
+		<h:form id ="form">
+			<p:dataTable var="entity" value="#{ortList.model}" paginator="true" rows="20" lazy="true" rowKey="#{entity.id}" rowIndexVar="index" tableStyleClass="display-table"
+	   			id="table" selectionMode="single" emptyMessage="#{msgs.noRecordsFound}" 
+	   			rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" pageLinks="10"
+	   			currentPageReportTemplate="Всего : #{ortList.model.rowCount} из #{ortList.model.totalCount}  &#160;&#160;| #{msgs.amountPerPage}"
+	            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport} {RowsPerPageDropdown}"
+	            selection="#{ortList.ort}"
+	            first="#{ortList.first}" >
+	            <p:ajax event="rowSelect" listener="#{ortController.onRowSelectTest}"/>
+				<p:ajax event="page" listener="#{ortList.onPageChange}"/>  
+			    
+			    <f:facet name="header">
+		            #{msgs.ort}
+		        </f:facet>
+			    
+			    <p:column headerText="#{msgs.year}">
+			        <h:outputText value="#{entity.year}" />
+			    </p:column>
+			    
+			    <p:column headerText="#{msgs.name}">
+			        <h:outputText value="#{entity.title}" />
+			    </p:column>
+			
+			</p:dataTable>
+		</h:form>
+		
+		
+		<p:blockUI block="form:table" trigger="form:table" >
+			#{msgs.loading}<br />
+		    <p:graphicImage library="img" name="ajaxloadingbar.gif"/>
+		</p:blockUI>	
+
+		<div class="clear"></div>			
+				
+	</ui:define>	
+	
+</ui:composition>

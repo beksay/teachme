@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/layouts/private.xhtml">
+ 	<ui:define name="content">
+ 		
+		<br/>	        
+		<h:form id="add-card-form" prependId="false">
+		   <h:panelGroup id="messages">
+				<p:growl globalOnly="true" />
+			</h:panelGroup>
+		    <h:panelGrid styleClass="form-table" columns="3">
+		    
+		        <h:outputLabel value="#{msgs.number}" for="number"/>
+                <p:inputText value="#{questionsController.questions.number}" id="number" style="width:300px" 
+                    required="true" requiredMessage="#{msgs.number} - #{msgs.isReq}" 
+                    converterMessage="Должны быть только цифры" maxlength="4" validatorMessage="Неправильная сумма">
+                    <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				</p:inputText>
+                <h:message for="number" display="icon" style="color:red;" />
+				
+				<h:outputLabel value="#{msgs.questions}" />
+				<p:textEditor id="titleName" widgetVar="editor1" value="#{questionsController.questions.title}"  height="300" style="margin-bottom:10px"
+				    required="true" requiredMessage="#{msgs.isReq}"/>
+		        <p:message for="titleName" />
+	
+		    </h:panelGrid>
+		    
+		    <div class="m-top">
+		    	<p:commandButton value="#{msgs.save}" ajax="false" action="#{questionsController.save()}" styleClass="button light-blue"/>
+		    	<h:commandButton value="#{msgs.cancel}" action="#{questionsController.cancel()}" immediate="true" styleClass="button red m-left"/>
+		   	</div>
+		    
+		</h:form>
+			
+		<div class="clear"></div>	
+				
+	</ui:define>	
+</ui:composition>

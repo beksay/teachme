@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/layouts/private.xhtml">
+ 	<ui:define name="content">
+ 	      <div class="container">
+				<div class="jukForm">
+					<h:form>
+						<div class="row">
+							<div class="col-12">
+							   <h3>#{msgs.ortTypeForm} : #{conversationOrt.ort.title} (#{conversationOrt.ort.year})</h3>
+							</div>
+							<div class="col-6">
+								 <h:outputLabel value="#{msgs.ortTitle}" for="ortTitle"/>
+								 <h:selectOneMenu id="ortTitle" value="#{ortTypeController.ortType.ortTitle}" 
+									    required="true" requiredMessage="#{msgs.ortTitle} - #{msgs.isReq}" effect="fold" editable="true" converter="cachedConverter">
+							            <f:selectItem itemLabel="#{msgs.selectValue}"/>
+										<f:selectItems value="#{ortTypeController.getOrtTitleList()}" var="entity" itemLabel="#{entity.name}" itemValue="#{entity}"/>
+								  </h:selectOneMenu>
+							      <h:message for="ortTitle" display="icon" style="color:red;" />
+							</div>
+							<div class="col-6">
+							</div>
+							<div class="col-6 mt-3" >
+							   <p:commandButton class="button" value="#{msgs.save}"
+								     action="#{ortTypeController.save()}" icon="fas fa-save"/>
+								<h:outputLabel style="width:50px;display:inline-block"/>				
+								<p:commandButton class="button" value="#{msgs.cancel}" icon="fas fa-window-close"
+								    action="#{ortTypeController.cancel()}" immediate="true" />
+							</div>
+						</div>
+						<p:messages/>
+					 </h:form>
+				</div>
+		 </div>				
+	</ui:define>	
+</ui:composition>

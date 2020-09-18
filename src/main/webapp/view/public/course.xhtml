@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layouts/public.xhtml" id="bodyBlock">
+
+	<ui:define name="content">
+		<h:form>
+			<div class="mainJukList">
+				<div class="container">
+					<div class="mainList">
+						<div class="mainJuk">
+							<div class="mainJukLeft">
+							</div>
+							<div class="mainJukContent">
+								<div class="mainJukInfo">
+									<label>Общереспубликанское тестирование «ОРТ» </label>
+									<p>Тест проводится на кыргызском, русском и узбекском языках и все варианты теста равноценны по сложности.</p>
+									<ul>
+										<li><span>#{msgs.courses} :</span>10</li>
+										<li><span>#{msgs.quiz} :</span>1000</li>
+										<li><span>#{msgs.learners} :</span> 500</li>
+									</ul>
+								</div>
+							</div>
+							<div class="mainJukButton">
+								<button>#{msgs.learnMore}</button>
+							</div>
+						</div>
+						<div class="mainJuk">
+							<div class="mainJukLeft">
+							</div>
+							<div class="mainJukContent"> 
+								<div class="mainJukInfo">
+									<label>TOEFL</label>
+									<p>Test of English as a foreign language — это популярная американская система оценки уровня английского языка.
+									   TOEFL особенно популярен среди студентов, которые хотят поступать в университеты стран Азии и Северной Америки.</p>
+									<ul>
+										<li><span>#{msgs.courses} :</span>10</li>
+										<li><span>#{msgs.quiz} :</span>1000</li>
+										<li><span>#{msgs.learners} :</span> 500</li>
+									</ul>
+								</div>
+							</div>
+							<div class="mainJukButton">
+								<button>#{msgs.learnMore}</button>
+							</div>
+						</div>
+						<div class="mainJuk">
+							<div class="mainJukLeft">
+							</div>
+							<div class="mainJukContent">
+								<div class="mainJukInfo">
+									<label>IELTS</label>
+									<p>The International English Language Testing System — это одна из самых популярных систем оценки уровня знания английского языка из самых лучших систем в мире.
+									    Получение этого сертификата помогает поступить в вузы США, Новой Зеландии, Канады, Великобритании, Австралии, Южноафриканские Республики</p>
+									<ul>
+										<li><span>#{msgs.courses} :</span>10</li>
+										<li><span>#{msgs.quiz} :</span>1000</li> 
+										<li><span>#{msgs.learners} :</span> 500</li>
+									</ul>
+								</div>
+							</div>
+							<div class="mainJukButton">
+								<button>#{msgs.learnMore}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
