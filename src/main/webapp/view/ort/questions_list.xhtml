@@ -6,62 +6,60 @@
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/layouts/private.xhtml">
  	<ui:define name="content">
-
-		<h:form id ="filter-form">	
-		        <p:inputText value="#{questionsList.searchString}" id="watermark"  styleClass="m-right">
-		                <p:ajax listener="#{questionsList.filterData()}" event="keyup" update="form"/>
-		        </p:inputText>
-		        <p:watermark for="watermark" value="Поиск" />
-
-				<p:commandButton ajax="true" update="form" value="#{msgs.search}" style="display:none"
-				    actionListener="#{questionsList.filterData()}" styleClass="button green f-right" />
-				    <h:outputText style="width:20px"/>
-				<h:commandLink value="#{msgs.add}" action="#{questionsController.add()}" styleClass="button green f-right" />
-		</h:form>
-        <div class="clear"></div>
-		<h:form id ="form">
-			<p:dataTable var="entity" value="#{questionsList.model}" paginator="true" rows="20" lazy="true" rowKey="#{entity.id}" rowIndexVar="index" tableStyleClass="display-table"
-	   			id="table" selectionMode="single" emptyMessage="#{msgs.noRecordsFound}" 
-	   			rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" pageLinks="10"
-	   			currentPageRepquestionsTemplate="Всего : #{questionsList.model.rowCount} из #{questionsList.model.totalCount}  &#160;&#160;| #{msgs.amountPerPage}"
-	            paginatquestionsemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageRepquestions} {RowsPerPageDropdown}"
-	            selection="#{questionsList.questions}"
-	            first="#{questionsList.first}" >
-	            <p:ajax event="rowSelect" listener="#{questionsController.onRowSelect}"/>
-				<p:ajax event="page" listener="#{questionsList.onPageChange}"/>  
-			   
-			    <f:facet name="header">
-		            #{msgs.questions}
-		        </f:facet>
-			   
-			    <p:column headerText="#{msgs.number}" width="100">
-                     <h:outputText value="#{entity.number}" />
-                </p:column>
-                
-			    <p:column headerText="#{msgs.name}">
-			        <h:outputText value="#{entity.title}" escape="false"/>
-			    </p:column>
-			    
-			    <p:column headerText="#{msgs.answers}" expquestionsable="false" style="width:100px;">
-			        <p:commandButton action="#{questionsController.view(entity)}" update="@form"  value="#{msgs.view}" />
-			    </p:column>
-			  
-			    <p:column headerText="#{msgs.operation}" expquestionsable="false" style="width:100px;">
-			        <p:commandButton action="#{questionsController.edit(entity)}" update="@form" icon="fa fa-edit" class="btn-journal" title="Обработать" />
-		        	<p:commandButton action="#{questionsController.delete(entity)}" update="@form" icon="fa fa-remove" class="btn-journal" title="Удалить" />
-			    </p:column>
-			
-			</p:dataTable>
-		</h:form>
-		
-		
-		<p:blockUI block="form:table" trigger="form:table" >
-			#{msgs.loading}<br />
-		    <p:graphicImage library="img" name="ajaxloadingbar.gif"/>
-		</p:blockUI>	
-
-		<div class="clear"></div>			
-				
+ 	  <div class="container">
+			<div class="mainListData">
+				<h:form id="filter-form">
+					<h:panelGroup styleClass="row filter" layout="block" id="filterPanel">
+						<div class="col">
+							<p:inputText value="#{questionsList.searchString}" id="watermark"  styleClass="m-right">
+					                <p:ajax listener="#{questionsList.filterData()}" event="keyup" update="form"/>
+					        </p:inputText>
+					        <p:watermark for="watermark" value="Поиск" />
+						</div>
+						<div class="col">
+					    	<p:commandButton ajax="true" update="form" value="#{msgs.search}" style="display:none" actionListener="#{questionsList.filterData()}" />
+						</div>
+						<div class="col">
+					    	<p:commandButton value="#{msgs.add}" action="#{questionsController.add()}" />
+						</div>
+					</h:panelGroup>
+				</h:form>
+				<h:form id="form">
+					<p:dataTable var="entity" value="#{questionsList.model}" 
+						paginator="true" rows="10" rowIndexVar="index" lazy="true" 
+						emptyMessage="#{msgs.noRecordsFound}" 
+						id="table"
+						style="margin-top:0px"
+						sortOrder="DESCENDING"
+						selectionMode="single" selection="#{questionsController.questions}"
+						rowsPerPageTemplate="10,20,50,100" paginatorPosition="bottom" pageLinks="10"
+			   			currentPageReportTemplate="#{msgs.showPaymentNumbers}" 
+			            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport} {RowsPerPageDropdown}"
+			            first="#{questionsList.first}" >
+			            <p:ajax event="page" listener="#{questionsList.onPageChange}"/>  
+			            <p:ajax event="rowSelect" listener="#{questionsController.onRowSelect}"/>
+			                <f:facet name="header">
+					           <h:outputText value="#{entity.ortType.ortTitle.name}" />
+					        </f:facet>
+						    <p:column headerText="#{msgs.number}" width="100">
+			                     <h:outputText value="#{entity.number}" />
+			                </p:column>
+						    <p:column headerText="#{msgs.questionName}">
+						        <h:outputText value="#{entity.title}" escape="false"/>
+						    </p:column>
+						    <p:column headerText="#{msgs.answers}" >
+						        <p:dataList value="#{questionsController.answersList(entity)}" var="car" type="ordered">
+						             <h:outputText value="#{car.letter}" style="color:blue"/>
+							         <h:outputText value="#{car.title}" escape="false" style="#{car.answer==true ? 'color:green' : ''}"/>
+							    </p:dataList>
+						    </p:column> 
+					        <p:column headerText="#{msgs.operation}" expquestionsable="false" width="100">
+					        	<p:commandButton action="#{questionsController.edit(entity)}" update="@form" icon="fa fa-edit"  title="Обработать" />
+					        	<p:commandButton action="#{questionsController.delete(entity)}" update="@form" icon="fas fa-trash-alt" title="Удалить" />
+					        </p:column>
+				    </p:dataTable>
+				</h:form>
+			</div>
+		</div>		
 	</ui:define>	
-	
 </ui:composition>

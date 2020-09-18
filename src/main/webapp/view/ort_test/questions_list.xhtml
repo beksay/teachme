@@ -5,72 +5,86 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/layouts/private.xhtml">
-
  	<ui:define name="content">
+ 	    <div class="container">
+			<div class="mainListData">
+			   <h:form id="form">
+					<h:panelGroup styleClass="row filter" layout="block" id="filterPanel">
+					   <ui:repeat var="car" value="#{testController.questionsList}">
+						  <div class="col">
+						      <p:commandButton action="#{questionsController.goTest(car)}" update="form2"
+					             value="#{car.number}" styleClass="#{testController.getBoldQuestions(car)}" />
+						  </div>
+				       </ui:repeat>
+					</h:panelGroup>
+					
+					<h:outputText value="#{testController.conversationQuestions.questions.title}" escape="false" />
+					
+			        <p:dataTable id="radioDT" var="car" value="#{testController.getAnswersList(testController.conversationQuestions.questions)}" 
+			            selection="#{testController.answers}" rowKey="#{car.id}" rendered="#{testController.conversationQuestions.questions.id!=null}"
+			            rowStyleClass="#{testController.getBoldDocuments(car)}">
+				        <p:column selectionMode="single" width="100" rendered="#{!testController.isTestEnded(conversationQuestions.questions)}"/>
+				        <p:column width="100">
+				            <h:outputText value="#{car.letter}" />
+				        </p:column>
+				        <p:column>
+				            <h:outputText value="#{car.title}" escape="false"/>
+				        </p:column>
+				    </p:dataTable>
+				    <br/>
+				    <p:commandButton action="#{testController.sendToConfirm()}" value="#{msgs.approve}" 
+				       rendered="#{!testController.isTestEnded(conversationQuestions.questions)}" update="form2"/>
+				    <p:growl id="growl" showDetail="true" sticky="true" />
+				</h:form>
+				<br/>
+				<h:form id ="form2" rendered="#{testController.conversationQuestions.questions.id !=null}">
+                      <h:panelGroup styleClass="row filter" layout="block" rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
+                         <div class="col">
+                            <h:outputText value="#{msgs.comments}"/>
+	                        <p:inputTextarea cols="50" rows="5" id="feedback" value="#{testController.feedback.title}"
+							    maxlength="2000" required="true" requiredMessage="#{msgs.comments} - #{msgs.isReq}">
+								<f:ajax event="blur" render="@this" execute="@this" />
+							</p:inputTextarea> 
+						    <p:watermark value="#{msgs.feedbackWater}" for="feedback"/>
+						    <h:outputText value="#{msgs.feedback}"/>
+                         </div>
+                         <div class="col mt-3">              
+                            <p:commandButton ajax="false"  update="feedbackId" value="#{msgs.send}" styleClass="feedbackButton"
+                                 actionListener="#{testController.sendFeedback()}" />
+                         </div>   
+                      </h:panelGroup>
+                      
+                      <h:panelGroup styleclass="CommentContainer" layout="block">
+						<h:panelGroup styleclass="Comment" layout="block">
+							label img
+							label comment_text
+							command_link Edit (user_itself), command_link Reply, command_link DELETE (if child >= 1 no delete), label create_date
+							
+							panelgroup hidden, reply_comment
+							
+						</h:panelGroup>
 
-		<h:form id ="form">
-		    
-		       <ui:repeat var="car" value="#{testController.questionsList}">
-			      <h:commandLink action="#{questionsController.goTest(car)}" 
-			             value="#{car.number}" styleClass="#{testController.getBoldQuestions(car)}" />
-		       </ui:repeat>
-		       
-		       <br /><br />
-		       
-		       <h:outputText value="#{testController.conversationQuestions.questions.title}" escape="false" />
-		       
-		       <p:dataTable id="radioDT" var="car" value="#{testController.getAnswersList(testController.conversationQuestions.questions)}" 
-		            selection="#{testController.answers}" rowKey="#{car.id}" rendered="#{testController.conversationQuestions.questions.id!=null}"
-		            rowStyleClass="#{testController.getBoldDocuments(car)}">
-			        <p:column selectionMode="single" style="width:30px;text-align:center" rendered="#{!testController.isTestEnded(testController.conversationQuestions.questions)}"/>
-			        
-			        <p:column >
-			            <h:outputText value="#{car.letter}" />
-			        </p:column>
-			        <p:column >
-			            <h:outputText value="#{car.title}" escape="false"/>
-			        </p:column>
-			    </p:dataTable>
-			  
-			     <h:panelGroup class="btnRegBlock" rendered="#{testController.conversationQuestions.questions.id!=null}">
-		        	<h:commandButton action="#{testController.sendToConfirm()}" value="#{msgs.approve}" rendered="#{!testController.isTestEnded(testController.conversationQuestions.questions)}"/>
-					<h:outputLabel style="width:10px;display:inline-block"/>
-				 </h:panelGroup>
-	
-	
-	           <p:messages/>
-			  <p:growl id="growl" showDetail="true" sticky="true" />
-		</h:form>
-		<h:form id ="form2" rendered="#{testController.conversationQuestions.questions.id !=null}">
-		
-		      <h:panelGrid columns="2" rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
-					<h:inputTextarea cols="50" rows="5" value="#{testController.feedback.title}" 
-						       id="feedback"   required="true" requiredMessage="#{msgs.isReq}"/>
-					<p:message for="feedback" />
-		      	   <p:commandButton ajax="false"  update="@form form2 feedbackId" value="#{msgs.sendFeedback}" actionListener="#{testController.sendFeedback()}" />
-		      </h:panelGrid>
-		
-		       <p:dataTable id="feedbackId" var="entity" value="#{testController.getFeedbackList(testController.conversationQuestions.questions)}" 
-		            selection="#{testController.answers}" rowKey="#{car.id}"
-		            rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
-			   
-			        <p:column headerText="#{msgs.feedbacks}">
-			            <h:outputText value="#{entity.title}"/>
-			        </p:column>
-			        <p:column headerText="#{msgs.users}">
-			            <h:outputText value="#{entity.user.person.fullName}" /><br/>
-			            <h:outputText value="#{entity.date}" style="color:green; margin-right:10px" >
-						    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-						</h:outputText> 
-			        </p:column>
-			    </p:dataTable>
-		
-		
-		</h:form>
-			
+					  </h:panelGroup>
 
-		<div class="clear"></div>			
+
+                      
+                      
 				
-	</ui:define>	
-	
+				       <p:dataTable id="feedbackId" var="entity" value="#{testController.getFeedbackList(testController.conversationQuestions.questions)}" 
+				            selection="#{testController.answers}" rowKey="#{car.id}"
+				            rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
+				            <p:column>
+					            <h:outputText value="#{entity.user.person.firstName}" /><br/>
+					            <h:outputText value="#{entity.date}" style="color:green; margin-right:10px" >
+								    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+								</h:outputText> 
+					        </p:column>
+					        <p:column>
+					            <h:outputText value="#{entity.title}"/>
+					        </p:column>
+					    </p:dataTable>
+				</h:form>
+			</div>
+		</div>		
+	</ui:define>		
 </ui:composition>

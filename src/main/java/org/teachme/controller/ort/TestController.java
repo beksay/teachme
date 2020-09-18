@@ -140,12 +140,23 @@ public class TestController implements Serializable {
 	
 	public Boolean isTestEnded(Questions questions) {
 		List<FilterExample> examples=new ArrayList<>();
-        examples.add(new FilterExample("questions", questions, InequalityConstants.EQUAL));
-        Long c = myService.countByExample(examples);
-        if (c > 0) {
+        if (questions!=null) examples.add(new FilterExample("questions", questions, InequalityConstants.EQUAL));
+        List<MyAnswer> c = myService.findByExample(0, 10, examples);
+        if (c.size()>0) {
         	return true;
 		}else {
 			return false;
+		}	
+	}
+	
+	public Boolean isTestEnded2(Questions questions) {
+		List<FilterExample> examples=new ArrayList<>();
+        examples.add(new FilterExample("questions", questions, InequalityConstants.EQUAL));
+        List<MyAnswer> c = myService.findByExample(0, 10, examples);
+        if (c.size()>0) {
+        	return false;
+		}else {
+			return true;
 		}	
 	}
 	

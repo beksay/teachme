@@ -8,45 +8,43 @@
  	<ui:define name="content">
  	     <div class="container">
 			<div class="mainListData">
-			     <div class="mainListFilter">
-					<h:form id="filter-form">
-						<h:panelGroup styleClass="row filter" layout="block" id="filterPanel">
-							<div class="col">
-						    	<p:commandButton value="#{msgs.add}" action="#{ortTypeController.add()}" />
-							</div>
-						</h:panelGroup>
-					</h:form>
-				</div>
+				<h:form id="filter-form">
+					<h:panelGroup styleClass="row filter" layout="block" id="filterPanel">
+						<div class="col">
+					    	<p:commandButton value="#{msgs.add}" action="#{ortTypeController.add()}" />
+						</div>
+					</h:panelGroup>
+				</h:form>
 				<h:form id="form">
-					<div class="mainListContent">
-						<p:dataGrid var="entity" value="#{ortTypeList.model}" columns="3" layout="grid"
-							paginator="false" rows="10" rowIndexVar="index" lazy="true" 
-							emptyMessage="#{msgs.noRecordsFound}" 
-							id="table"
-							style="margin-top:0px" 
-							sortOrder="DESCENDING"
-							styleClass="borderlessGrid"
-							rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" pageLinks="10"
-				   			currentPageReportTemplate="#{msgs.showPaymentNumbers}" 
-				            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport} {RowsPerPageDropdown}">
-					         
-					        <f:facet name="header">
-					            #{conversationOrt.ort.title} (#{conversationOrt.ort.year})
-					        </f:facet>
-					        <h:commandLink action="#{ortTypeController.view(entity)}" styleClass="myHoverEffect" >
-						        <p:panel header="#{entity.ortTitle.name}" style="text-align:center">
-						            <h:graphicImage rendered="#{entity.ortTitle.id == 1}" library="images" name="kg.png" width="170" height="110"/>
-						            <h:graphicImage rendered="#{entity.ortTitle.id == 2}" library="images" name="ru.png" width="170" height="110"/>
-						            <h:graphicImage rendered="#{entity.ortTitle.id == 3}" library="images" name="mathkg.png" width="170" height="110"/>
-						            <h:graphicImage rendered="#{entity.ortTitle.id == 4}" library="images" name="mathru.png" width="170" height="110"/>
-						            <h:graphicImage rendered="#{entity.ortTitle.id == 5}" library="images" name="historykg.png" width="170" height="110"/>
-						            <h:graphicImage rendered="#{entity.ortTitle.id == 6}" library="images" name="historyru.png" width="170" height="110"/>
-						            <br />
-						            <h:outputText value="#{entity.ortTitle.amount} сом" />
-						        </p:panel>
-					        </h:commandLink>
-					    </p:dataGrid>
-					</div>
+					<p:dataGrid var="entity" value="#{ortTypeList.model}" columns="3" layout="grid"
+						paginator="false" rows="10" rowIndexVar="index" lazy="true" 
+						emptyMessage="#{msgs.noRecordsFound}" 
+						id="table"
+						style="margin-top:0px" 
+						sortOrder="DESCENDING"
+						styleClass="borderlessGrid"
+						rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" pageLinks="10"
+			   			currentPageReportTemplate="#{msgs.showPaymentNumbers}" 
+			            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport} {RowsPerPageDropdown}">
+				         
+				        <f:facet name="header">
+				            #{conversationOrt.ort.title} (#{conversationOrt.ort.year})
+				        </f:facet>
+				        <h:commandLink action="#{ortTypeController.view(entity)}" styleClass="myHoverEffect" >
+					        <p:panel header="#{entity.ortTitle.name}" style="text-align:center">
+					            <h:graphicImage rendered="#{entity.ortTitle.id == 1}" library="images" name="kg.png" width="170" height="110"/>
+					            <h:graphicImage rendered="#{entity.ortTitle.id == 2}" library="images" name="ru.png" width="170" height="110"/>
+					            <h:graphicImage rendered="#{entity.ortTitle.id == 3}" library="images" name="mathkg.png" width="170" height="110"/>
+					            <h:graphicImage rendered="#{entity.ortTitle.id == 4}" library="images" name="mathru.png" width="170" height="110"/>
+					            <h:graphicImage rendered="#{entity.ortTitle.id == 5}" library="images" name="historykg.png" width="170" height="110"/>
+					            <h:graphicImage rendered="#{entity.ortTitle.id == 6}" library="images" name="historyru.png" width="170" height="110"/>
+					            <br />
+					            <ui:remove>
+					              <h:outputText value="#{entity.ortTitle.amount} сом" />
+					            </ui:remove>
+					        </p:panel>
+				        </h:commandLink>
+				    </p:dataGrid>
 				</h:form>
 			</div>
 		</div>					

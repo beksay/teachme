@@ -6,37 +6,47 @@
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/layouts/private.xhtml">
  	<ui:define name="content">
- 		
-		<h2>#{msgs.answers} </h2> <br/><br/>	        
-		<h:form id="add-card-form" prependId="false">
-		   <h:panelGroup id="messages">
-				<p:growl globalOnly="true" />
-			</h:panelGroup>
-		    <h:panelGrid styleClass="form-table" columns="3">
-		    
-		        <h:outputText value="#{msgs.letter}" styleClass="form-table-label disp-blc"/>
-				<h:inputText value="#{answersController.answers.letter}" 
-					       id="letter"  style="width:300px;" required="true" requiredMessage="#{msgs.isReq}"/>
-				<p:message for="letter" />
-				
-				<h:outputLabel value="#{msgs.name}" />
-				<p:textEditor id="titleName" widgetVar="editor1" value="#{answersController.answers.title}"  height="200" style="margin-bottom:10px"
-				    required="true" requiredMessage="#{msgs.isReq}"/>
-		        <p:message for="titleName" />
-				
-				<h:outputLabel value="#{msgs.isAnswer}"/>
-                <p:selectBooleanCheckbox value="#{answersController.answers.answer}" />
-	
-		    </h:panelGrid>
-		     
-		    <div class="m-top">
-		    	<p:commandButton value="#{msgs.save}" ajax="false" action="#{answersController.save()}" styleClass="button light-blue"/>
-		    	<h:commandButton value="#{msgs.cancel}" action="#{answersController.cancel()}" immediate="true" styleClass="button red m-left"/>
-		   	</div>
-		    
-		</h:form>
-			
-		<div class="clear"></div>	
-				
+ 	    <div class="container">
+				<div class="jukForm">
+					<h:form>
+						<div class="row">
+							<div class="col-12">
+							   <h4>#{msgs.answerForm} </h4><br />
+							   <h:outputLabel value="#{conversationQuestions.questions.title}" escape="false"/>
+							</div>
+							<div class="col-6">
+								<h:outputText value="#{msgs.letter}" styleClass="form-table-label disp-blc"/>
+								<h:inputText value="#{answersController.answers.letter}" 
+									       id="letter" required="true" requiredMessage="#{msgs.isReq}"/>
+								<p:message for="letter" />
+							</div>
+							<div class="col-6">
+							</div>
+							<div class="col-6">
+								<h:outputLabel value="#{msgs.name}" />
+								<p:textEditor id="titleName" widgetVar="editor1" value="#{answersController.answers.title}"  height="200" 
+								    required="true" requiredMessage="#{msgs.isReq}"/>
+						        <p:message for="titleName" />
+							</div>
+							<div class="col-6">
+							</div>
+							<div class="col-6">
+							    <h:outputLabel value="#{msgs.isAnswer}"/>
+                                <p:selectBooleanCheckbox value="#{answersController.answers.answer}" />
+							</div>
+							<div class="col-6">
+							</div>
+							<div class="col-6 mt-3" >
+							   <p:commandButton class="button" value="#{msgs.save}"
+								     action="#{answersController.save()}" icon="fas fa-save"/>
+								<h:outputLabel style="width:50px;display:inline-block"/>				
+								<p:commandButton class="button" value="#{msgs.cancel}" icon="fas fa-window-close"
+								    action="#{answersController.cancel()}" immediate="true" />
+							</div>
+						</div>
+						<p:messages/>
+				 </h:form>
+			 </div>
+		</div>			
 	</ui:define>	
 </ui:composition>

@@ -2,6 +2,8 @@ package org.teachme.controller.ort;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -12,8 +14,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
+import org.teachme.beans.FilterExample;
+import org.teachme.beans.InequalityConstants;
 import org.teachme.conversations.ConversationOrtType;
 import org.teachme.conversations.ConversationQuestions;
+import org.teachme.domain.Answers;
 import org.teachme.domain.Questions;
 import org.teachme.service.AnswersService;
 import org.teachme.service.QuestionsService;
@@ -78,11 +83,10 @@ public class QuestionsController implements Serializable {
         
     }
 	
-	
-	public String view(Questions questions) {
-		this.questions = questions;
-		conversation.setQuestions(questions);
-		return answerList();
+	public List<Answers> answersList(Questions questions){
+		List<FilterExample> examples = new ArrayList<>();
+		if (questions!=null) examples.add(new FilterExample("questions", questions, InequalityConstants.EQUAL));	
+		return answersService.findByExample(0, 10, examples);
 	}
 	
 	public String delete(Questions c) {
@@ -95,8 +99,6 @@ public class QuestionsController implements Serializable {
 		return list();
 	}
 	
-   
-	
 	private String list() {
 		return "/view/ort/questions_list.xhtml?faces-redirect=true";
 	}
@@ -105,14 +107,10 @@ public class QuestionsController implements Serializable {
 		return "/view/ort/questions_form.xhtml";
 	}
 	
-	private String answerList() {
-		return "/view/ort/answers_list.xhtml?faces-redirect=true";
-	}
-	
 	public String goTest(Questions questions) {
 		this.questions = questions;
 		conversation.setQuestions(questions);
-		return null;
+		return "/view/ort_test/questions_list.xhtml?faces-redirect=true";
 	}
 
 	public Questions getQuestions() {

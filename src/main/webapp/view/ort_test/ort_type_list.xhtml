@@ -7,7 +7,6 @@
     template="/WEB-INF/templates/layouts/private.xhtml">
  	<ui:define name="content">
 
-        <div class="clear"></div>
 		<h:form id ="form">
 			<p:dataGrid var="entity" value="#{ortTypeList.model}" columns="3" layout="grid"
 				paginator="false" rows="10" rowIndexVar="index" lazy="true" 
@@ -18,8 +17,7 @@
 				styleClass="borderlessGrid"
 				rowsPerPageTemplate="10,20,30,40,50" paginatorPosition="bottom" pageLinks="10"
 	   			currentPageReportTemplate="#{msgs.showPaymentNumbers}" 
-	            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport} {RowsPerPageDropdown}">
-		         
+	            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {CurrentPageReport} {RowsPerPageDropdown}"> 
 		        <f:facet name="header">
 		            #{conversationOrt.ort.title} (#{conversationOrt.ort.year})
 		        </f:facet>
@@ -31,16 +29,10 @@
 			            <h:graphicImage rendered="#{entity.ortTitle.id == 4}" library="images" name="mathru.png" width="170" height="110"/>
 			            <h:graphicImage rendered="#{entity.ortTitle.id == 5}" library="images" name="historykg.png" width="170" height="110"/>
 			            <h:graphicImage rendered="#{entity.ortTitle.id == 6}" library="images" name="historyru.png" width="170" height="110"/>
-			  
 			        </p:panel>
 		        </h:commandLink>
-		 
 		    </p:dataGrid>
 		</h:form>
-			
-
-		<div class="clear"></div>			
-				
 	</ui:define>	
 	
 </ui:composition>

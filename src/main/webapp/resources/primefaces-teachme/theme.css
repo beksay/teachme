@@ -10276,7 +10276,7 @@ body .ui-calendar {
 }
 body .mainListData {
 	background:#fff;
-	margin-top:-9px;
+	margin-top:5px;
 	padding:20px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -10344,4 +10344,38 @@ body .mainDataDate p svg {
     z-index: 99999999;
     font-size: 10px;
 }
+.GREENMENU{
+	background-color: #4e9a06!important;
+	border:1px solid #4e9a06;
+}
+.REDMENU{
+	background-color: #e88181 !important;
+	border:1px solid #e88181;
+}
+.ELSEMENU{
+}
+body .GREENDOC{
+	color: white;
+	background-color: #4e9a06 !important;
+}
 
+.REDDOC{
+	color: white;
+	background-color: #e88181 !important;
+}
+
+body .feedbackButton{
+	width: auto;
+	min-height: 40px;
+	background: #457770;
+	border-radius: 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+	color: #fff;
+	text-align: center;
+	height: auto;
+	position: absolute;
+    bottom: 0;
+}
