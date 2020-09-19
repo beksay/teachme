@@ -7,7 +7,7 @@
   </context-param>
    	<context-param>
      <param-name>primefaces.THEME</param-name>
-     <param-value>teachme</param-value>
+     <param-value>ebilim</param-value>
 	</context-param>
   <context-param>
     <param-name>javax.faces.FACELETS_BUFFER_SIZE</param-name>
@@ -39,7 +39,7 @@
   </context-param>
   <filter>
     <filter-name>SecurityFilter</filter-name>
-    <filter-class>org.teachme.filter.SecurityFilter</filter-class>
+    <filter-class>org.ebilim.filter.SecurityFilter</filter-class>
     <async-supported>true</async-supported>
     <init-param>
       <param-name>public</param-name>
@@ -64,7 +64,7 @@
   </filter-mapping>
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
-    <filter-class>org.teachme.filter.CharacterEncodingFilter</filter-class>
+    <filter-class>org.ebilim.filter.CharacterEncodingFilter</filter-class>
     <async-supported>true</async-supported>
   </filter>
   <filter-mapping>

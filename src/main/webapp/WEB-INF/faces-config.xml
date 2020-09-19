@@ -36,16 +36,16 @@
 	</navigation-rule>
 	
 	<application>
-        <action-listener>org.teachme.listener.JSFActionListener</action-listener>
+        <action-listener>org.ebilim.listener.JSFActionListener</action-listener>
     	<navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
     	<view-handler>org.primefaces.application.DialogViewHandler</view-handler>
         
         <resource-bundle>
-			<base-name>org.teachme.resources.messages</base-name>
+			<base-name>org.ebilim.resources.messages</base-name>
 			<var>msgs</var>
 		</resource-bundle>
 		<resource-bundle>
-			<base-name>org.teachme.resources.enums</base-name>
+			<base-name>org.ebilim.resources.enums</base-name>
 			<var>enums</var>
 		</resource-bundle>
 		<locale-config>

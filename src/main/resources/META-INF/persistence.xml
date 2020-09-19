@@ -7,19 +7,19 @@
         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
    <persistence-unit name="primary">
       <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-      <jta-data-source>java:jboss/datasources/teachmeDS</jta-data-source>
-      <class>org.teachme.domain.Role</class>
-      <class>org.teachme.domain.User</class>
-      <class>org.teachme.domain.Attachment</class>
-      <class>org.teachme.domain.Person</class>
-      <class>org.teachme.domain.News</class>
-      <class>org.teachme.domain.Answers</class>
-      <class>org.teachme.domain.Questions</class>
-      <class>org.teachme.domain.Ort</class>
-      <class>org.teachme.domain.OrtType</class>
-      <class>org.teachme.domain.OrtTitle</class>
-      <class>org.teachme.domain.MyAnswer</class>
-      <class>org.teachme.domain.Feedback</class>
+      <jta-data-source>java:jboss/datasources/ebilimDS</jta-data-source>
+      <class>org.ebilim.domain.Role</class>
+      <class>org.ebilim.domain.User</class>
+      <class>org.ebilim.domain.Attachment</class>
+      <class>org.ebilim.domain.Person</class>
+      <class>org.ebilim.domain.News</class>
+      <class>org.ebilim.domain.Answers</class>
+      <class>org.ebilim.domain.Questions</class>
+      <class>org.ebilim.domain.Ort</class>
+      <class>org.ebilim.domain.OrtType</class>
+      <class>org.ebilim.domain.OrtTitle</class>
+      <class>org.ebilim.domain.MyAnswer</class>
+      <class>org.ebilim.domain.Feedback</class>
       <!-- entities -->
       
       <exclude-unlisted-classes>true</exclude-unlisted-classes>
