@@ -20,10 +20,12 @@ import org.ebilim.conversations.ConversationOrtType;
 import org.ebilim.conversations.ConversationQuestions;
 import org.ebilim.domain.Answers;
 import org.ebilim.domain.Feedback;
+import org.ebilim.domain.FeedbackDetail;
 import org.ebilim.domain.MyAnswer;
 import org.ebilim.domain.Questions;
 import org.ebilim.enums.SortEnum;
 import org.ebilim.service.AnswersService;
+import org.ebilim.service.FeedbackDetailService;
 import org.ebilim.service.FeedbackService;
 import org.ebilim.service.MyAnswerService;
 import org.ebilim.service.QuestionsService;
@@ -43,6 +45,8 @@ public class TestController implements Serializable {
 	private MyAnswerService myService;
 	@EJB
 	private FeedbackService feedbackService;
+	@EJB
+	private FeedbackDetailService feedbackDetailService;
 	@Inject
 	private ConversationAnswers conversation;	
 	@Inject
@@ -196,6 +200,26 @@ public class TestController implements Serializable {
 		
 		return feedbackService.findByExample(0, 100, SortEnum.DESCENDING, examples, "date");
 	}
+   
+   public List<FeedbackDetail> getFeedbackDetailList(Feedback feedback) {
+
+		List<FilterExample> examples = new ArrayList<>();
+	
+		examples.add(new FilterExample("feedback", feedback, InequalityConstants.EQUAL));	
+		
+		return feedbackDetailService.findByExample(0, 100, SortEnum.DESCENDING, examples, "date");
+	}
+   
+    public Boolean checkDetail(Feedback feedback) {
+    	List<FilterExample> examples = new ArrayList<>();
+		examples.add(new FilterExample("feedback", feedback, InequalityConstants.EQUAL));	
+		List<FeedbackDetail> details = feedbackDetailService.findByExample(0, 10, examples);
+     	if (details.size()>0) {
+			return true;
+		} else {
+            return false;
+		}
+    }
    
 	public ConversationQuestions getConversationQuestions() {
 		return conversationQuestions;

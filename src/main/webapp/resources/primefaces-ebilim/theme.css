@@ -10379,3 +10379,11 @@ body .feedbackButton{
 	position: absolute;
     bottom: 0;
 }
+
+body .feedback {
+    font-size:14px;
+}
+body .childFeedback {
+    margin-left:65px;
+    margin-top:5px;
+}

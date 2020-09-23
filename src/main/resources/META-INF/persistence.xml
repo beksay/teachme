@@ -20,6 +20,7 @@
       <class>org.ebilim.domain.OrtTitle</class>
       <class>org.ebilim.domain.MyAnswer</class>
       <class>org.ebilim.domain.Feedback</class>
+      <class>org.ebilim.domain.FeedbackDetail</class>
       <!-- entities -->
       
       <exclude-unlisted-classes>true</exclude-unlisted-classes>

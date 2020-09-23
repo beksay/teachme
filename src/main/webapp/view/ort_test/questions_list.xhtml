@@ -12,12 +12,13 @@
 					<h:panelGroup styleClass="row filter" layout="block" id="filterPanel">
 					   <ui:repeat var="car" value="#{testController.questionsList}">
 						  <div class="col">
-						      <p:commandButton action="#{questionsController.goTest(car)}" update="form2"
+						      <p:commandButton action="#{questionsController.goTest(car)}" update="form form2"
 					             value="#{car.number}" styleClass="#{testController.getBoldQuestions(car)}" />
 						  </div>
 				       </ui:repeat>
 					</h:panelGroup>
 					
+					<h:outputText value="#{msgs.questionNumber} : #{conversationQuestions.questions.number}" rendered="#{conversationQuestions.questions.id !=null}"/>
 					<h:outputText value="#{testController.conversationQuestions.questions.title}" escape="false" />
 					
 			        <p:dataTable id="radioDT" var="car" value="#{testController.getAnswersList(testController.conversationQuestions.questions)}" 
@@ -33,7 +34,7 @@
 				    </p:dataTable>
 				    <br/>
 				    <p:commandButton action="#{testController.sendToConfirm()}" value="#{msgs.approve}" 
-				       rendered="#{!testController.isTestEnded(conversationQuestions.questions)}" update="form2"/>
+				       rendered="#{!testController.isTestEnded(conversationQuestions.questions)}" update="form form2"/>
 				    <p:growl id="growl" showDetail="true" sticky="true" />
 				</h:form>
 				<br/>
@@ -53,36 +54,43 @@
                                  actionListener="#{testController.sendFeedback()}" />
                          </div>   
                       </h:panelGroup>
-                      
-                      <h:panelGroup styleclass="CommentContainer" layout="block">
-						<h:panelGroup styleclass="Comment" layout="block">
-							label img
-							label comment_text
-							command_link Edit (user_itself), command_link Reply, command_link DELETE (if child >= 1 no delete), label create_date
-							
-							panelgroup hidden, reply_comment
-							
-						</h:panelGroup>
-
-					  </h:panelGroup>
-
-
-                      
-                      
-				
-				       <p:dataTable id="feedbackId" var="entity" value="#{testController.getFeedbackList(testController.conversationQuestions.questions)}" 
-				            selection="#{testController.answers}" rowKey="#{car.id}"
-				            rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
-				            <p:column>
-					            <h:outputText value="#{entity.user.person.firstName}" /><br/>
-					            <h:outputText value="#{entity.date}" style="color:green; margin-right:10px" >
-								    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-								</h:outputText> 
-					        </p:column>
-					        <p:column>
-					            <h:outputText value="#{entity.title}"/>
-					        </p:column>
-					    </p:dataTable>
+					  
+					  <h:panelGroup layout="block" rendered="#{testController.isTestEnded(testController.conversationQuestions.questions)}">
+						  <ui:repeat var="item" value="#{testController.getFeedbackList(testController.conversationQuestions.questions)}">
+							   <h:panelGroup layout="block" class="feedback">
+								    <div class="feedback-left">
+								      <h:graphicImage library="images" name="person.png" width="25" height="25"/>
+								    </div>
+								    <div class="feedback-body">
+								      <h:outputText value="#{item.user.person.firstName}"/><br/>
+								      <h:outputText value="#{item.date}" style="color:green; margin-right:10px" >
+									    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+									  </h:outputText> 
+								      <p class="textFeedback">
+								          #{item.title}<br/>
+								        <a href="#">#{msgs.reply}</a>
+								      </p>
+								    </div>
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" class="childFeedback" rendered="#{testController.checkDetail(item)}">
+								  <ui:repeat var="backs" value="#{testController.getFeedbackDetailList(item)}">
+									 <div class="feedback">
+									    <div class="feedback-left">
+									      <h:graphicImage library="images" name="person.png" width="25" height="25"/>
+									    </div>
+									    <div class="feedback-body">
+									      <h:outputText value="#{backs.user.person.firstName}"/>
+									      <p class="textFeedback">
+									          #{backs.title}<br/>
+									        <a href="#">#{msgs.reply}</a>
+									      </p>
+									    </div>
+									</div>
+								  </ui:repeat>
+								</h:panelGroup>
+							</ui:repeat>
+					</h:panelGroup>
 				</h:form>
 			</div>
 		</div>		
